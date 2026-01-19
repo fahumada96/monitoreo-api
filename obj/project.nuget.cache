@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "R2idb71k6j0=",
+  "dgSpecHash": "uDSzfYtq7Es=",
   "success": true,
-  "projectFilePath": "D:\\Cesar\\PruebaPrometheus\\PruebaPrometheus.csproj",
+  "projectFilePath": "D:\\fahumada\\PruebaPrometheus\\PruebaPrometheus.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fahumada\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\fahumada\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.0\\microsoft.extensions.configuration.10.0.0.nupkg.sha512",

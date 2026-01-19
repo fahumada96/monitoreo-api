@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Cesar\\PruebaPrometheus\\PruebaPrometheus.csproj": {}
+    "D:\\fahumada\\PruebaPrometheus\\PruebaPrometheus.csproj": {}
   },
   "projects": {
-    "D:\\Cesar\\PruebaPrometheus\\PruebaPrometheus.csproj": {
+    "D:\\fahumada\\PruebaPrometheus\\PruebaPrometheus.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Cesar\\PruebaPrometheus\\PruebaPrometheus.csproj",
+        "projectUniqueName": "D:\\fahumada\\PruebaPrometheus\\PruebaPrometheus.csproj",
         "projectName": "PruebaPrometheus",
-        "projectPath": "D:\\Cesar\\PruebaPrometheus\\PruebaPrometheus.csproj",
+        "projectPath": "D:\\fahumada\\PruebaPrometheus\\PruebaPrometheus.csproj",
         "packagesPath": "C:\\Users\\fahumada\\.nuget\\packages\\",
-        "outputPath": "D:\\Cesar\\PruebaPrometheus\\obj\\",
+        "outputPath": "D:\\fahumada\\PruebaPrometheus\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\fahumada\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -43,6 +43,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
             "Serilog.AspNetCore": {
               "target": "Package",
               "version": "[10.0.0, )"
