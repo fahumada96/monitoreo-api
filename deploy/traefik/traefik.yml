@@ -1,4 +1,2 @@
-tls:
-  certificates:
-    - certFile: /certs/lxhndmonitor.crt
-      keyFile: /certs/lxhndmonitor.key
+# HTTP-only: no TLS certificates needed in dynamic config
+# This file intentionally left minimal for local testing.
