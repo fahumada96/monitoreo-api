@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: /certs/lxhndmonitor.crt
+      keyFile: /certs/lxhndmonitor.key
