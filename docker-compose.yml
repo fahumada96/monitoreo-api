@@ -11,16 +11,11 @@ services:
       - --providers.file.directory=/etc/traefik/dynamic
       - --providers.file.watch=true
       - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --entrypoints.web.http.redirections.entryPoint.to=websecure
-      - --entrypoints.web.http.redirections.entryPoint.scheme=https
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./deploy/traefik:/etc/traefik/dynamic:ro
-      - ./deploy/certs:/certs:ro
     networks:
       - monitoring
 
@@ -47,13 +42,12 @@ services:
       - ./deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     command:
       - --config.file=/etc/prometheus/prometheus.yml
-      - --web.external-url=https://lxhndmonitor/prometheus
+      - --web.external-url=http://lxhndmonitor/prometheus
       - --web.route-prefix=/prometheus
     labels:
       - traefik.enable=true
       - traefik.http.routers.prometheus.rule=Host(`lxhndmonitor`) && PathPrefix(`/prometheus`)
-      - traefik.http.routers.prometheus.entrypoints=websecure
-      - traefik.http.routers.prometheus.tls=true
+      - traefik.http.routers.prometheus.entrypoints=web
       - traefik.http.middlewares.prometheus-stripprefix.stripPrefix.prefixes=/prometheus
       - traefik.http.routers.prometheus.middlewares=prometheus-stripprefix
     networks:
@@ -64,7 +58,7 @@ services:
     container_name: grafana
     restart: unless-stopped
     environment:
-      - GF_SERVER_ROOT_URL=https://lxhndmonitor/grafana
+      - GF_SERVER_ROOT_URL=http://lxhndmonitor/grafana
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
     volumes:
       - grafana_data:/var/lib/grafana
@@ -72,8 +66,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.grafana.rule=Host(`lxhndmonitor`) && PathPrefix(`/grafana`)
-      - traefik.http.routers.grafana.entrypoints=websecure
-      - traefik.http.routers.grafana.tls=true
+      - traefik.http.routers.grafana.entrypoints=web
+      - traefik.http.services.grafana.loadbalancer.server.port=3000
       - traefik.http.middlewares.grafana-stripprefix.stripPrefix.prefixes=/grafana
       - traefik.http.routers.grafana.middlewares=grafana-stripprefix
     networks:
@@ -90,8 +84,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.loki.rule=Host(`lxhndmonitor`) && PathPrefix(`/loki`)
-      - traefik.http.routers.loki.entrypoints=websecure
-      - traefik.http.routers.loki.tls=true
+      - traefik.http.routers.loki.entrypoints=web
       - traefik.http.middlewares.loki-stripprefix.stripPrefix.prefixes=/loki
       - traefik.http.routers.loki.middlewares=loki-stripprefix
     networks:
@@ -104,16 +97,15 @@ services:
     environment:
       - MINIO_ROOT_USER=minioadmin
       - MINIO_ROOT_PASSWORD=minioadmin
-      - MINIO_SERVER_URL=https://lxhndmonitor
-      - MINIO_BROWSER_REDIRECT_URL=https://lxhndmonitor/minio
+      - MINIO_SERVER_URL=http://lxhndmonitor
+      - MINIO_BROWSER_REDIRECT_URL=http://lxhndmonitor/minio
     command: server /data --console-address :9001
     volumes:
       - minio_data:/data
     labels:
       - traefik.enable=true
       - traefik.http.routers.minio.rule=Host(`lxhndmonitor`) && PathPrefix(`/minio`)
-      - traefik.http.routers.minio.entrypoints=websecure
-      - traefik.http.routers.minio.tls=true
+      - traefik.http.routers.minio.entrypoints=web
       - traefik.http.services.minio.loadbalancer.server.port=9001
       - traefik.http.middlewares.minio-stripprefix.stripPrefix.prefixes=/minio
       - traefik.http.routers.minio.middlewares=minio-stripprefix
