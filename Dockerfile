@@ -4,8 +4,8 @@ WORKDIR /src
 
 # Copy csproj and restore as distinct layers
 COPY PruebaPrometheus.csproj ./
-# Restore using the same configuration as publish to avoid asset mismatches
-RUN dotnet restore ./PruebaPrometheus.csproj -c Release
+# Restore dependencies (configuration flag is not supported by 'dotnet restore')
+RUN dotnet restore ./PruebaPrometheus.csproj
 
 # Copy the rest of the source
 COPY . .
