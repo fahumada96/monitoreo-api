@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   traefik:
-    image: traefik:v2.10
+    image: traefik:latest
     container_name: traefik
     restart: unless-stopped
     command:
@@ -13,6 +13,8 @@ services:
       - --providers.docker.network=monitoring
       - --log.level=DEBUG
       - --accesslog=true
+    environment:
+      - DOCKER_API_VERSION=1.44
     ports:
       - "80:80"
       - "8080:8080"
@@ -53,6 +55,7 @@ services:
       - traefik.docker.network=monitoring
       - traefik.http.routers.prometheus.rule=Host(`lxhndmonitor`) && PathPrefix(`/prometheus`)
       - traefik.http.routers.prometheus.entrypoints=web
+      - traefik.http.services.prometheus.loadbalancer.server.port=9090
       - traefik.http.middlewares.prometheus-stripprefix.stripPrefix.prefixes=/prometheus
       - traefik.http.routers.prometheus.middlewares=prometheus-stripprefix
     networks:
@@ -92,6 +95,7 @@ services:
       - traefik.docker.network=monitoring
       - traefik.http.routers.loki.rule=Host(`lxhndmonitor`) && PathPrefix(`/loki`)
       - traefik.http.routers.loki.entrypoints=web
+      - traefik.http.services.loki.loadbalancer.server.port=3100
       - traefik.http.middlewares.loki-stripprefix.stripPrefix.prefixes=/loki
       - traefik.http.routers.loki.middlewares=loki-stripprefix
     networks:
