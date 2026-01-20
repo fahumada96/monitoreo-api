@@ -92,6 +92,8 @@ services:
       - traefik.http.routers.loki.rule=Host(`lxhndmonitor`) && PathPrefix(`/loki`)
       - traefik.http.routers.loki.entrypoints=web
       - traefik.http.services.loki.loadbalancer.server.port=3100
+      - traefik.http.middlewares.loki-stripprefix.stripPrefix.prefixes=/loki
+      - traefik.http.routers.loki.middlewares=loki-stripprefix
     networks:
       - monitoring
 
