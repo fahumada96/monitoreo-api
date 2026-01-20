@@ -4,7 +4,7 @@ server:
   log_level: info
 
 common:
-  path: /loki
+  path_prefix: /loki
   replication_factor: 1
   ring:
     kvstore:
@@ -36,7 +36,7 @@ chunk_store_config:
   max_look_back_period: 0s
 
 query_range:
-  parallelise_shards: true
+  parallelise_shardable_queries: true
   cache_results: true
 
 compactor:

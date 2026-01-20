@@ -86,7 +86,7 @@ services:
     image: grafana/loki:2.9.0
     container_name: loki
     restart: unless-stopped
-    command: -config.file=/etc/loki/loki-config.yml
+    command: -config.file=/etc/loki/loki-config.yml -config.expand-env=true
     volumes:
       - ./deploy/loki/loki-config.yml:/etc/loki/loki-config.yml:ro
       - loki_data:/loki
