@@ -56,8 +56,6 @@ services:
       - traefik.http.routers.prometheus.rule=Host(`lxhndmonitor`) && PathPrefix(`/prometheus`)
       - traefik.http.routers.prometheus.entrypoints=web
       - traefik.http.services.prometheus.loadbalancer.server.port=9090
-      - traefik.http.middlewares.prometheus-stripprefix.stripPrefix.prefixes=/prometheus
-      - traefik.http.routers.prometheus.middlewares=prometheus-stripprefix
     networks:
       - monitoring
 
@@ -66,7 +64,7 @@ services:
     container_name: grafana
     restart: unless-stopped
     environment:
-      - GF_SERVER_ROOT_URL=http://lxhndmonitor/grafana
+      - GF_SERVER_ROOT_URL=http://lxhndmonitor/grafana/
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
     volumes:
       - grafana_data:/var/lib/grafana
@@ -77,8 +75,6 @@ services:
       - traefik.http.routers.grafana.rule=Host(`lxhndmonitor`) && PathPrefix(`/grafana`)
       - traefik.http.routers.grafana.entrypoints=web
       - traefik.http.services.grafana.loadbalancer.server.port=3000
-      - traefik.http.middlewares.grafana-stripprefix.stripPrefix.prefixes=/grafana
-      - traefik.http.routers.grafana.middlewares=grafana-stripprefix
     networks:
       - monitoring
 
@@ -96,8 +92,6 @@ services:
       - traefik.http.routers.loki.rule=Host(`lxhndmonitor`) && PathPrefix(`/loki`)
       - traefik.http.routers.loki.entrypoints=web
       - traefik.http.services.loki.loadbalancer.server.port=3100
-      - traefik.http.middlewares.loki-stripprefix.stripPrefix.prefixes=/loki
-      - traefik.http.routers.loki.middlewares=loki-stripprefix
     networks:
       - monitoring
 
